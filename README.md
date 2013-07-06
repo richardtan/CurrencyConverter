@@ -1,4 +1,5 @@
-<h1>Currency Converter</h1>
+Currency Converter
+==================
 
 This is the code for the application, Currency Converter which can be found at the below website:
 
