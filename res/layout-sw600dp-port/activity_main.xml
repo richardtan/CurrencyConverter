@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	tools:context=".MainActivity">
+
+	<fragment android:name="com.tckr.currencyconverter.ConverterFragment"
+			  android:id="@+id/currencyFragment"
+			  android:layout_width="match_parent"
+			  android:layout_height="280dp" />
+
+	<fragment android:name="com.tckr.currencyconverter.DashboardFragment"
+			  android:id="@+id/dashboardFragment"
+			  android:layout_width="match_parent"
+			  android:layout_height="fill_parent" />
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_centerHorizontal="true" >
+
+	<ListView
+		android:id="@+id/remove_dashboard_list"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:layout_alignParentTop="true" 
+		android:layout_above="@+id/linear_layout_remove">
+		
+	</ListView>
+
+	<LinearLayout 
+		android:id="@+id/linear_layout_remove" 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent" 
+		android:layout_alignParentBottom="true"
+		android:paddingTop="10dp">
+
+		<Button
+			android:id="@+id/button_cancel2_dashboard"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:text="@string/cancel" />
+
+		<Button
+			android:id="@+id/button_remove_dashboard"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:text="@string/remove" />
+
+	</LinearLayout>
+</RelativeLayout>
