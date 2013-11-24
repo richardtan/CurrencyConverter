@@ -231,7 +231,7 @@ public class DashboardFragment extends SherlockFragment{
 	 * @param dashValues
 	 * @param base
 	 * @param context
-	 * @param view
+	 * @param tv
 	 * @param dgv
 	 */
 	public static void addToDashboard(String[] dashValues, String base, Context context, TextView tv, DraggableGridView dgv) {

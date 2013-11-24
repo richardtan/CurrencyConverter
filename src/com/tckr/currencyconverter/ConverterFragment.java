@@ -149,13 +149,14 @@ public class ConverterFragment extends SherlockFragment {
 					String sFrom = currencyData[iFrom].getCurrency();
 					
 					// Build the URL to be executed/
-					String builder = "http://www.google.com/ig/calculator?hl=en&q=" + numberToConvert + sFrom + "=?" + sTo;
-					
+					//String builder = "http://www.google.com/ig/calculator?hl=en&q=" + numberToConvert + sFrom + "=?" + sTo; //OLD CODE!
+                    String builder = "http://rate-exchange.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
+
 					// Execute the result and pass the display to TheConverter on the resultText element.
 					tc = new ConverterAsync(v.getContext(), resultText);
-					tc.execute(builder);
+					tc.execute(new String[] {builder, numberToConvert});
 					
-					// To handle connection timeout after 30 minutes
+					// To handle connection timeout after 30 seconds
 					// Store the view so we can display a toast
 					tempViewToast = v;
 					

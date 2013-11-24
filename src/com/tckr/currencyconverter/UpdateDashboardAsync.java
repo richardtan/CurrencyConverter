@@ -3,6 +3,7 @@ package com.tckr.currencyconverter;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -82,10 +83,13 @@ public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]>
 			// Iterate through currency we need to convert.
 			for(int i = 0; i < dashCurr.length; i++) {
 				
-				// Build the url that is to be executed to Google
-				String urlExecute = "http://www.google.com/ig/calculator?hl=en&q=" + CURRENCYDATA[baseCurr].getBaseIndex() + 
-						CURRENCYDATA[baseCurr].getCurrency() + "=?" + CURRENCYDATA[dashCurr[i].intValue()].getCurrency();	
-				
+				// Build the url that is to be executed to Google // OLD CODE
+				//String urlExecute = "http://www.google.com/ig/calculator?hl=en&q=" + CURRENCYDATA[baseCurr].getBaseIndex() +
+				//		CURRENCYDATA[baseCurr].getCurrency() + "=?" + CURRENCYDATA[dashCurr[i].intValue()].getCurrency();
+
+                String urlExecute = "http://rate-exchange.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
+                        CURRENCYDATA[dashCurr[i].intValue()].getCurrency() + "&q=" + CURRENCYDATA[baseCurr].getBaseIndex();
+
 				Log.d(LOG_TAG, urlExecute);
 				
 				// Execute the URL which has been passed into the Thread
@@ -117,10 +121,15 @@ public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]>
 				 * NOTE
 				 * JSON will return in the below format and will be one object deep:
 				 * {lhs: "1 U.S. dollar",rhs: "0.756315232 Euros",error: "",icc: true}
+				 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
 				 */
-				
+
+                // Limit to 6 decimal places
+                String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
+
 				dashboardValue[i][0] = "" + dashCurr[i].intValue();
-				dashboardValue[i][1] = jObject.getString("rhs");
+				dashboardValue[i][1] = returnValue + " " +
+                        CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().substring(0, CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().length() - 6);
 			}
 			
 			return dashboardValue;

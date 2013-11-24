@@ -3,6 +3,7 @@ package com.tckr.currencyconverter;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -89,17 +90,21 @@ public class ConverterAsync extends AsyncTask<String, Integer, String> {
 			/*
 			 * NOTE
 			 * JSON will return in the below format and will be one object deep:
-			 * {lhs: "1 U.S. dollar",rhs: "0.756315232 Euros",error: "",icc: true}
+			 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
 			 */
-			
+
+            // Limit to 6 decimal places
+            String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
+
 			// Build the object to be returned back to the end user.
-			return jObject.getString("lhs") + " equals <b>" + jObject.getString("rhs") + "</b>";
+			//return jObject.getString("lhs") + " equals <b>" + jObject.getString("rhs") + "</b>";
+            return params[1] + " " + jObject.getString("from") + " equals <b>" + returnValue + " " + jObject.getString("to") + "</b>";
 		   
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
-		return null;
+		return "Error, something went wrong... Sorry!";
 	}
 	
 	@Override
