@@ -87,7 +87,10 @@ public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]>
 				//String urlExecute = "http://www.google.com/ig/calculator?hl=en&q=" + CURRENCYDATA[baseCurr].getBaseIndex() +
 				//		CURRENCYDATA[baseCurr].getCurrency() + "=?" + CURRENCYDATA[dashCurr[i].intValue()].getCurrency();
 
-                String urlExecute = "http://rate-exchange.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
+                //String urlExecute = "http://rate-exchange.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
+                //        CURRENCYDATA[dashCurr[i].intValue()].getCurrency() + "&q=" + CURRENCYDATA[baseCurr].getBaseIndex();
+
+                String urlExecute = "http://just-experiment.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
                         CURRENCYDATA[dashCurr[i].intValue()].getCurrency() + "&q=" + CURRENCYDATA[baseCurr].getBaseIndex();
 
 				Log.d(LOG_TAG, urlExecute);

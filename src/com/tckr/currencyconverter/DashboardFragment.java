@@ -1,7 +1,5 @@
 package com.tckr.currencyconverter;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,18 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
- 
-import com.actionbarsherlock.app.SherlockFragment;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.tckr.currencyconverter.data.CurrencyData;
 import com.tckr.currencyconverter.data.DatabaseHelper;
 import com.tckr.currencyconverter.view.DraggableGridView;
 import com.tckr.currencyconverter.view.OnRearrangeListener;
+
+import java.io.IOException;
  
 public class DashboardFragment extends SherlockFragment{
 

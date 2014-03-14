@@ -1,7 +1,5 @@
 package com.tckr.currencyconverter;
 
-import java.util.ArrayList;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -32,7 +30,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.tckr.currencyconverter.data.CurrencyData;
 import com.tckr.currencyconverter.data.DatabaseHelper;
 import com.tckr.currencyconverter.view.DraggableGridView;
- 
+
+import java.util.ArrayList;
+
 public class MainActivity extends SherlockFragmentActivity {
 	
 	private static final int ADD_TO_DASHBOARD_DIALOG = 10;
@@ -301,7 +301,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				aboutDialog.setContentView(R.layout.about_dialog);
 				aboutDialog.setTitle(R.string.about);
 				TextView tv = (TextView) aboutDialog.findViewById(R.id.aboutTextView);
-				tv.setText(Html.fromHtml("<b>Currency Converter</b><br /><br /><b>Version 1.1.3</b><br /><br />This application is a simple currency converter. The exchange rates comes live from data provided by Google Finance. The device needs to be connected to the Internet in order to work.<br /><br /><b>Permissions</b><br /><br />The application requires the following permission<br /><br /><u>Full Network Access</u><br />In order to provide the latest exchange rates, the application needs to connect to the Internet.<br /><br /><u>View Network Connection</u><br />To allow the application to show a message that the device is not connected to the Internet.<br /><br /><b>Contact</b><br /><a href=\"mailto:currencyconverter@justexperiment.com\">Email Us</a><br /><a href=\"http://justexperiment.com/currencyconverter.php\">Visit our Webpage</a><br /><br /><b>Buy us a Beer!<br /></b><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=52MBSJUUWA562\">Donate via PayPal</a><br /><br /><b>Github</b><br /><a href=\"https://github.com/richardtan/CurrencyConverter/\">Find/Fork the code at Github</a>"));
+				tv.setText(Html.fromHtml("<b>Currency Converter</b><br /><br /><b>Version 1.1.4</b><br /><br />This application is a simple currency converter. The exchange rates comes live from data provided by Google Finance. The device needs to be connected to the Internet in order to work.<br /><br /><b>Permissions</b><br /><br />The application requires the following permission<br /><br /><u>Full Network Access</u><br />In order to provide the latest exchange rates, the application needs to connect to the Internet.<br /><br /><u>View Network Connection</u><br />To allow the application to show a message that the device is not connected to the Internet.<br /><br /><b>Contact</b><br /><a href=\"mailto:currencyconverter@justexperiment.com\">Email Us</a><br /><a href=\"http://justexperiment.com/currencyconverter.php\">Visit our Webpage</a><br /><br /><b>Buy us a Beer!<br /></b><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=52MBSJUUWA562\">Donate via PayPal</a><br /><br /><b>Github</b><br /><a href=\"https://github.com/richardtan/CurrencyConverter/\">Find/Fork the code at Github</a>"));
 				tv.setMovementMethod(LinkMovementMethod.getInstance());
 				return aboutDialog;
 		

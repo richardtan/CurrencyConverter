@@ -150,7 +150,8 @@ public class ConverterFragment extends SherlockFragment {
 					
 					// Build the URL to be executed/
 					//String builder = "http://www.google.com/ig/calculator?hl=en&q=" + numberToConvert + sFrom + "=?" + sTo; //OLD CODE!
-                    String builder = "http://rate-exchange.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
+                    //String builder = "http://rate-exchange.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
+                    String builder = "http://just-experiment.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
 
 					// Execute the result and pass the display to TheConverter on the resultText element.
 					tc = new ConverterAsync(v.getContext(), resultText);
