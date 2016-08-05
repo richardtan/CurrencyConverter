@@ -2,10 +2,12 @@
 ###############
 .idea/
 .settings/
+.gradle
 bin/
 gen-external-apklibs/
 gen/
 target/
+build/
 
 # Compiled source #
 ###################
@@ -45,3 +47,6 @@ target/
 Icon?
 ehthumbs.db
 Thumbs.db
+build.gradle
+local.properties
+keystore.properties
