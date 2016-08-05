@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+Properties props = new Properties()
+props.load(new FileInputStream(project.rootProject.file('keystore.properties')))
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://repo1.maven.org/maven2' }
+        maven { url "http://repo.maven.apache.org/maven2" }
+        maven { url "http://central.maven.org/maven2" }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+    }
+}
+
+repositories{
+    mavenCentral()
+    jcenter()
+}
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.tckr.currencyconverter"
+        minSdkVersion 11
+        targetSdkVersion 17
+        versionCode 7
+        versionName "1.1.5"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+
+    }
+
+    signingConfigs {
+        keystorekey {
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
+            storeFile file(props['storeFile'])
+            storePassword props['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.keystorekey
+        }
+
+        debug {
+            signingConfig signingConfigs.keystorekey
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'com.android.support:support-v4:22.0.0'
+}
