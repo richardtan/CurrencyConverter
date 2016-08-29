@@ -8,6 +8,7 @@ gen-external-apklibs/
 gen/
 target/
 build/
+Screenshots/
 
 # Compiled source #
 ###################
@@ -49,3 +50,4 @@ ehthumbs.db
 Thumbs.db
 local.properties
 keystore.properties
+
