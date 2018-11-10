@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
- 
-import com.actionbarsherlock.app.SherlockFragment;
+
 import com.tckr.currencyconverter.data.CurrencyData;
 
-public class ConverterFragment extends SherlockFragment {
+public class ConverterFragment extends Fragment {
 	
 	View tempViewToast;
 	Spinner fromSpinner;
@@ -151,7 +151,7 @@ public class ConverterFragment extends SherlockFragment {
 					// Build the URL to be executed/
 					//String builder = "http://www.google.com/ig/calculator?hl=en&q=" + numberToConvert + sFrom + "=?" + sTo; //OLD CODE!
                     //String builder = "http://rate-exchange.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
-                    String builder = "http://just-experiment.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
+                    String builder = "https://just-experiment.appspot.com/currency?from=" + sFrom + "&to=" + sTo + "&q=" + numberToConvert;
 
 					// Execute the result and pass the display to TheConverter on the resultText element.
 					tc = new ConverterAsync(v.getContext(), resultText);

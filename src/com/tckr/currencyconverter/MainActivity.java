@@ -10,9 +10,13 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -22,18 +26,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.tckr.currencyconverter.data.CurrencyData;
 import com.tckr.currencyconverter.data.DatabaseHelper;
 import com.tckr.currencyconverter.view.DraggableGridView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends AppCompatActivity {
 	
 	private static final int ADD_TO_DASHBOARD_DIALOG = 10;
 	private static final int REMOVE_FROM_DASHBOARD_DIALOG = 11;
@@ -103,19 +102,19 @@ public class MainActivity extends SherlockFragmentActivity {
 			ActionBar.TabListener tabListener = new ActionBar.TabListener() {
  
 				@Override
-				public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
+				public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {}
  
 				@Override
-				public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 					mPager.setCurrentItem(tab.getPosition());
 				}
  
 				@Override
-				public void onTabReselected(Tab tab, FragmentTransaction ft) {}
+				public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {}
 			};
  
 			// Creating Android Tab
-			Tab tab = mActionBar.newTab()
+			ActionBar.Tab tab = mActionBar.newTab()
 					.setText("Converter")
 					.setTabListener(tabListener);
  
@@ -132,14 +131,13 @@ public class MainActivity extends SherlockFragmentActivity {
  
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 	
 	/**
 	 * This will handle when user clicks on the menu item.
 	 * (non-Javadoc)
-	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onOptionsItemSelected(android.view.MenuItem)
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -202,7 +200,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			
 		} else if (item.getItemId() == R.id.menu_add) {
 			
-			// Check to make sure that we not not have more than 10 currencies on the dashboard.
+			// Check to make sure that we not not have more than 15 currencies on the dashboard.
 			if(!dh.checkDashboardLessThanFifteen()) {
 				Toast.makeText(this, R.string.toast1, Toast.LENGTH_SHORT).show();
 				return true;

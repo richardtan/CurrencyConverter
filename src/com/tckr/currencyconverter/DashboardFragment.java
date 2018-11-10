@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -21,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.tckr.currencyconverter.data.CurrencyData;
 import com.tckr.currencyconverter.data.DatabaseHelper;
 import com.tckr.currencyconverter.view.DraggableGridView;
@@ -29,7 +29,7 @@ import com.tckr.currencyconverter.view.OnRearrangeListener;
 
 import java.io.IOException;
  
-public class DashboardFragment extends SherlockFragment{
+public class DashboardFragment extends Fragment {
 
 	private DraggableGridView dgv;
 	private TextView tv;

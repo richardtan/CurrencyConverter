@@ -9,6 +9,7 @@ gen/
 target/
 build/
 Screenshots/
+gradle/
 
 # Compiled source #
 ###################
@@ -50,4 +51,7 @@ ehthumbs.db
 Thumbs.db
 local.properties
 keystore.properties
+gradlew
+gradlew.bat
+
 

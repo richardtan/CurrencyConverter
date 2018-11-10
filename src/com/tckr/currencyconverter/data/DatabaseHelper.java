@@ -1,14 +1,6 @@
 package com.tckr.currencyconverter.data;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-
-import com.tckr.currencyconverter.DashboardFragment;
-import com.tckr.currencyconverter.view.DraggableGridView;
-
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,10 +10,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.tckr.currencyconverter.DashboardFragment;
+import com.tckr.currencyconverter.view.DraggableGridView;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//The Android's default system path of your application database.
-	private static String DB_PATH = "/data/data/com.tckr.currencyconverter/databases/";
+	private static String DB_PATH = ""; //"/data/data/com.tckr.currencyconverter/databases/";
 	private static String DB_NAME = "currconvert.db";
 	private final Context myContext;
 	public static String LOG_TAG = "com.tckr.currencyconverter.data.DatabaseHelper";
@@ -40,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public DatabaseHelper(Context context) {
 		super(context, DB_NAME, null, 1);
 		this.myContext = context;
+		DB_PATH = context.getFilesDir().getPath() + "/";
 	}
 	
 	/**
@@ -67,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	// Checks if the database has been created. If not then create it from the Asset Folder.
+	@TargetApi(24)
 	private boolean checkDataBase() {
 			
 		SQLiteDatabase checkDB = null;

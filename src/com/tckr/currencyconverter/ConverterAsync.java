@@ -9,15 +9,14 @@ import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 
 public class ConverterAsync extends AsyncTask<String, Integer, String> {
@@ -62,44 +61,56 @@ public class ConverterAsync extends AsyncTask<String, Integer, String> {
 		try {
 
 			// Execute the URL which has been passed into the Thread
-			HttpClient client = new DefaultHttpClient();
-			HttpGet request = new HttpGet(params[0]);
-			HttpResponse response = client.execute(request);
-			
+			//HttpClient client = new DefaultHttpClient();
+			//HttpGet request = new HttpGet(params[0]);
+			//HttpResponse response = client.execute(request);
+
+			URL url = new URL(params[0]);
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
 			// Setup an InputStream to handle the response.
-			InputStream ips  = response.getEntity().getContent();
-			BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
-			
-			// Use a reader to read the data and store it in a String builder
-			StringBuilder sb = new StringBuilder();
-			String s;
-			while(true)
-			{
-				s = buf.readLine();
-				if(s==null || s.length()==0)
-					break;
-				sb.append(s);
+			//InputStream ips  = response.getEntity().getContent();
+			//BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
 
+			try {
+
+				InputStream ips = new BufferedInputStream(urlConnection.getInputStream());
+				BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
+
+				// Use a reader to read the data and store it in a String builder
+				StringBuilder sb = new StringBuilder();
+				String s;
+				while(true)
+				{
+					s = buf.readLine();
+					if(s==null || s.length()==0)
+						break;
+					sb.append(s);
+
+				}
+				buf.close();
+				ips.close();
+
+				// Pass the end result into a JSONObject
+				JSONObject jObject = new JSONObject(sb.toString());
+
+				/*
+				 * NOTE
+				 * JSON will return in the below format and will be one object deep:
+				 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
+				 */
+
+				// Limit to 6 decimal places
+				String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
+
+				// Build the object to be returned back to the end user.
+				//return jObject.getString("lhs") + " equals <b>" + jObject.getString("rhs") + "</b>";
+				return params[1] + " " + jObject.getString("from") + " equals <b>" + returnValue + " " + jObject.getString("to") + "</b>";
+
+			} finally {
+				urlConnection.disconnect();
 			}
-			buf.close();
-			ips.close();
-			
-			// Pass the end result into a JSONObject
-			JSONObject jObject = new JSONObject(sb.toString());
-			
-			/*
-			 * NOTE
-			 * JSON will return in the below format and will be one object deep:
-			 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
-			 */
 
-            // Limit to 6 decimal places
-            String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
-
-			// Build the object to be returned back to the end user.
-			//return jObject.getString("lhs") + " equals <b>" + jObject.getString("rhs") + "</b>";
-            return params[1] + " " + jObject.getString("from") + " equals <b>" + returnValue + " " + jObject.getString("to") + "</b>";
-		   
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

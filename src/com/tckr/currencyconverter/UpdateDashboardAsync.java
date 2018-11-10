@@ -1,20 +1,5 @@
 package com.tckr.currencyconverter;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
-
-import com.tckr.currencyconverter.data.CurrencyData;
-import com.tckr.currencyconverter.data.DatabaseHelper;
-import com.tckr.currencyconverter.view.DraggableGridView;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +7,20 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.tckr.currencyconverter.data.CurrencyData;
+import com.tckr.currencyconverter.data.DatabaseHelper;
+import com.tckr.currencyconverter.view.DraggableGridView;
+
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DecimalFormat;
 
 public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]> {
 
@@ -90,49 +89,61 @@ public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]>
                 //String urlExecute = "http://rate-exchange.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
                 //        CURRENCYDATA[dashCurr[i].intValue()].getCurrency() + "&q=" + CURRENCYDATA[baseCurr].getBaseIndex();
 
-                String urlExecute = "http://just-experiment.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
+                String urlExecute = "https://just-experiment.appspot.com/currency?from=" + CURRENCYDATA[baseCurr].getCurrency() + "&to=" +
                         CURRENCYDATA[dashCurr[i].intValue()].getCurrency() + "&q=" + CURRENCYDATA[baseCurr].getBaseIndex();
 
 				Log.d(LOG_TAG, urlExecute);
 				
 				// Execute the URL which has been passed into the Thread
-				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(urlExecute);
-				HttpResponse response = client.execute(request);
-				
-				// Setup an InputStream to handle the response.
-				InputStream ips  = response.getEntity().getContent();
-				BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
-				
-				// Use a reader to read the data and store it in a String builder
-				StringBuilder sb = new StringBuilder();
-				String s;
-				while(true)
-				{
-					s = buf.readLine();
-					if(s==null || s.length()==0)
-						break;
-					sb.append(s);
+				//HttpClient client = new DefaultHttpClient();
+				//HttpGet request = new HttpGet(urlExecute);
+				//HttpResponse response = client.execute(request);
+
+				URL url = new URL(urlExecute);
+				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+				try {
+
+					InputStream ips = new BufferedInputStream(urlConnection.getInputStream());
+					BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
+
+					// Setup an InputStream to handle the response.
+					//InputStream ips  = response.getEntity().getContent();
+					//BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
+
+					// Use a reader to read the data and store it in a String builder
+					StringBuilder sb = new StringBuilder();
+					String s;
+					while(true)
+					{
+						s = buf.readLine();
+						if(s==null || s.length()==0)
+							break;
+						sb.append(s);
+					}
+					buf.close();
+					ips.close();
+
+					// Pass the end result into a JSONObject
+					JSONObject jObject = new JSONObject(sb.toString());
+
+					/*
+					 * NOTE
+					 * JSON will return in the below format and will be one object deep:
+					 * {lhs: "1 U.S. dollar",rhs: "0.756315232 Euros",error: "",icc: true}
+					 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
+					 */
+
+					// Limit to 6 decimal places
+					String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
+
+					dashboardValue[i][0] = "" + dashCurr[i].intValue();
+					dashboardValue[i][1] = returnValue + " " +
+							CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().substring(0, CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().length() - 6);
+
+				} finally {
+					urlConnection.disconnect();
 				}
-				buf.close();
-				ips.close();
-				
-				// Pass the end result into a JSONObject
-				JSONObject jObject = new JSONObject(sb.toString());
-				
-				/*
-				 * NOTE
-				 * JSON will return in the below format and will be one object deep:
-				 * {lhs: "1 U.S. dollar",rhs: "0.756315232 Euros",error: "",icc: true}
-				 * {"to": "EUR", "rate": 0.73763999999999996, "from": "USD", "v": 0.73763999999999996}
-				 */
-
-                // Limit to 6 decimal places
-                String returnValue = new DecimalFormat("#.######").format(jObject.getDouble("v"));
-
-				dashboardValue[i][0] = "" + dashCurr[i].intValue();
-				dashboardValue[i][1] = returnValue + " " +
-                        CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().substring(0, CURRENCYDATA[dashCurr[i].intValue()].getCurrencyDisplay().length() - 6);
 			}
 			
 			return dashboardValue;

@@ -1,9 +1,10 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
 		android:id="@+id/menu_refresh"
 		android:orderInCategory="1"
-		android:showAsAction="withText|ifRoom"
+		app:showAsAction="withText|ifRoom"
 		android:icon="@drawable/ic_refresh"
 		android:title="@string/refresh" 
 		android:titleCondensed="@string/refresh" />
@@ -11,7 +12,7 @@
 	<item
 		android:id="@+id/menu_add"
 		android:orderInCategory="2"
-		android:showAsAction="withText|ifRoom"
+		app:showAsAction="withText|ifRoom"
 		android:icon="@drawable/ic_new"
 		android:title="@string/add_dashboard"
 		android:titleCondensed="@string/add_dashboard" />
@@ -19,7 +20,7 @@
 	<item
 		android:id="@+id/menu_remove"
 		android:orderInCategory="3"
-		android:showAsAction="withText|ifRoom"
+		app:showAsAction="withText|ifRoom"
 		android:icon="@drawable/ic_discard"
 		android:title="@string/remove_dashboard"
 		android:titleCondensed="@string/remove_dashboard" />
@@ -27,7 +28,7 @@
 	<item
 		android:id="@+id/menu_about"
 		android:orderInCategory="4"
-		android:showAsAction="withText|ifRoom"
+		app:showAsAction="withText|ifRoom"
 		android:icon="@drawable/ic_about"
 		android:title="@string/about"
 		android:titleCondensed="@string/about" />
