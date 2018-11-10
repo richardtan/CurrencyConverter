@@ -1,6 +1,5 @@
 package com.tckr.currencyconverter.data;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -69,7 +68,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	// Checks if the database has been created. If not then create it from the Asset Folder.
-	@TargetApi(24)
 	private boolean checkDataBase() {
 			
 		SQLiteDatabase checkDB = null;

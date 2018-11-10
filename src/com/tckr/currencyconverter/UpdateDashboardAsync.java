@@ -95,21 +95,14 @@ public class UpdateDashboardAsync extends AsyncTask<String, Integer, String[][]>
 				Log.d(LOG_TAG, urlExecute);
 				
 				// Execute the URL which has been passed into the Thread
-				//HttpClient client = new DefaultHttpClient();
-				//HttpGet request = new HttpGet(urlExecute);
-				//HttpResponse response = client.execute(request);
-
 				URL url = new URL(urlExecute);
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
 				try {
 
+					// Setup an InputStream to handle the response.
 					InputStream ips = new BufferedInputStream(urlConnection.getInputStream());
 					BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
-
-					// Setup an InputStream to handle the response.
-					//InputStream ips  = response.getEntity().getContent();
-					//BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
 
 					// Use a reader to read the data and store it in a String builder
 					StringBuilder sb = new StringBuilder();

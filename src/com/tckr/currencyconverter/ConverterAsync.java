@@ -61,17 +61,10 @@ public class ConverterAsync extends AsyncTask<String, Integer, String> {
 		try {
 
 			// Execute the URL which has been passed into the Thread
-			//HttpClient client = new DefaultHttpClient();
-			//HttpGet request = new HttpGet(params[0]);
-			//HttpResponse response = client.execute(request);
-
 			URL url = new URL(params[0]);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
 			// Setup an InputStream to handle the response.
-			//InputStream ips  = response.getEntity().getContent();
-			//BufferedReader buf = new BufferedReader(new InputStreamReader(ips,"iso-8859-1"), 8);
-
 			try {
 
 				InputStream ips = new BufferedInputStream(urlConnection.getInputStream());
