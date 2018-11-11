@@ -37,8 +37,8 @@ android {
         applicationId "com.tckr.currencyconverter"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.1.5"
+        versionCode 9
+        versionName "1.1.6"
     }
 
     sourceSets {
